@@ -8,8 +8,14 @@
     <PackageProjectUrl>https://github.com/mrchrisok/OkonkwoCore.Netx</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!--<TargetsForTfmSpecificBuildOutput>IncludeReferencedDlls;IncludeSpecificDlls</TargetsForTfmSpecificBuildOutput>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>-->
   </PropertyGroup>
 
+  <!--Workarounds for nuget pack issues-->
+  <!--http://yer.ac/blog/2019/09/05/dotnet-pack-project-reference-and-nuget-dependency/-->
+  
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.1.2" />
     <PackageReference Include="CsvTextFieldParser" Version="1.2.1" />
@@ -21,4 +27,16 @@
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
+  <!--<Target Name="IncludeReferencedDlls" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(OutputPath)\OkonkwoCore.Netx.*.dll" />
+    </ItemGroup>
+  </Target>
+  
+  <Target Name="IncludeSpecificDlls" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(OutputPath)\OkonkwoCore.Netx.*.dll" />
+    </ItemGroup>
+  </Target>-->
+  
 </Project>
