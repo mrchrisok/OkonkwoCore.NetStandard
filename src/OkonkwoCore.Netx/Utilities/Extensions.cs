@@ -28,7 +28,7 @@ namespace OkonkwoCore.Netx.Utilities
         /// </summary>
         /// <param name="type">The type to return the full directory path for.</param>
         /// <returns></returns>
-        public static string AssemblyDirectory(this Type type)
+        public static string GetAssemblyPath(this Type type)
         {
             var codeBase = type.Assembly.CodeBase;
             var uri = new UriBuilder(codeBase);
