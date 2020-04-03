@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>O. Chris Okonkwo</Authors>
+    <Product />
+    <Description>Core interfaces and classes for building .Net(x) solutions.</Description>
+    <PackageProjectUrl>https://github.com/mrchrisok/OkonkwoCore.Netx</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Company />
   </PropertyGroup>
 
   <ItemGroup>
