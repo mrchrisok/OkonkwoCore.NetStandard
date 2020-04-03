@@ -5,4 +5,4 @@
 # OkonkwoCore.Netx
 Core interfaces and classes for building .Net(x) solutions  
 TargetFramework: netstandard2.1  
-NuGet: [Install-Package OkonkwoCore.Netx -Version 1.0.0](https://www.nuget.org/packages/OkonkwoCore.Netx/)  
+NuGet: [Install-Package OkonkwoCore.Netx](https://www.nuget.org/packages/OkonkwoCore.Netx/)  
