@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace OkonkwoCore.Netx.Utilities
@@ -57,6 +58,32 @@ namespace OkonkwoCore.Netx.Utilities
             t.InvokeMember(propName,
                            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.SetProperty |
                            BindingFlags.Instance, null, obj, new object[] { val });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyExpression"></param>
+        /// <returns></returns>
+        public static string ExtractPropertyName<T>(Expression<Func<T>> propertyExpression)
+        {
+            if (propertyExpression == null)
+                throw new ArgumentNullException("propertyExpression");
+
+            var memberExpression = propertyExpression.Body as MemberExpression;
+            if (memberExpression == null)
+                throw new ArgumentException("memberExpression");
+
+            var property = memberExpression.Member as PropertyInfo;
+            if (property == null)
+                throw new ArgumentException("property");
+
+            var getMethod = property.GetGetMethod(true);
+            if (getMethod.IsStatic)
+                throw new ArgumentException("static method");
+
+            return memberExpression.Member.Name;
         }
 
         #endregion
