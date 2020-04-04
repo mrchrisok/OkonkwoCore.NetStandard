@@ -9,6 +9,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company />
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 </PropertyGroup>
   
   <ItemGroup>
