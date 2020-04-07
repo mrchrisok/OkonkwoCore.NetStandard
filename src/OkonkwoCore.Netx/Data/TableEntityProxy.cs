@@ -156,6 +156,8 @@ namespace OkonkwoCore.Netx.Data
                 ReadEntity(properties, null);
             }
 
+            Timestamp = timeStamp;
+
             return _entity;
         }
 
