@@ -1,10 +1,9 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace OkonkwoCore.Netx.Contracts
 {
     public interface IDataProvider
     {
-        Task<string> GetDataAsync(HttpRequestMessage req);
+        Task<string> GetDataAsync(object state);
     }
 }
