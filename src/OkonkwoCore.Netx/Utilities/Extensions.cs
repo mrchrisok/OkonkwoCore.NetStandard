@@ -2,11 +2,26 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 
 namespace OkonkwoCore.Netx.Utilities
 {
     public static class Extensions
     {
+        public static string ToXmlSerializedUtc(this DateTime time)
+        {
+            string xmlUtcTime = XmlConvert.ToString(time, "yyyy-MM-ddTHH:mm:ssZ");
+
+            return xmlUtcTime;
+        }
+
+        public static DateTime GetXmlSerializedUtcAsDateTime(string time)
+        {
+            DateTime utcDateTime = XmlConvert.ToDateTime(time, XmlDateTimeSerializationMode.Utc);
+
+            return utcDateTime;
+        }
+
         /// <summary>
         /// Divides an lists of an entity into smaller lists per the given chunkSize
         /// </summary>
