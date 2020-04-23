@@ -35,6 +35,11 @@ namespace OkonkwoCore.Netx.Data
             base.OnModelCreating(modelBuilder);
         }
 
+        protected virtual string GetUser()
+        {
+            return null;
+        }
+
         protected virtual void BeforeSaveChanges()
         {
             _saveChangesTime = DateTime.UtcNow;
@@ -46,11 +51,18 @@ namespace OkonkwoCore.Netx.Data
                 if (entry.Entity is IChangesTrackedEntity changedOrAddedItem)
                 {
                     if (entry.State == EntityState.Added)
+                    {
                         changedOrAddedItem.DateCreated = _saveChangesTime.Value;
+                        changedOrAddedItem.CreatedBy = GetUser();
+                    }
                     else
+                    {
                         changedOrAddedItem.DateCreated = (DateTime)entry.OriginalValues["DateCreated"];
+                        changedOrAddedItem.CreatedBy = (string)entry.OriginalValues["CreatedBy"];
 
-                    changedOrAddedItem.DateModified = _saveChangesTime.Value;
+                        changedOrAddedItem.DateModified = _saveChangesTime.Value;
+                        changedOrAddedItem.ModifiedBy = GetUser();
+                    }
                 }
             }
 
