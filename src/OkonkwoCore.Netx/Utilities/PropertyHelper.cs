@@ -23,13 +23,22 @@ namespace OkonkwoCore.Netx.Utilities
         public static TProp GetPrivatePropertyValue<TProp>(this object obj, string propName)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
-            var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-            PropertyInfo pi = obj.GetType().GetProperty(propName, bindingFlags);
+
+            Type t = obj.GetType();
+            PropertyInfo pi = null;
+
+            var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+
+            while (pi == null && t != null)
+            {
+                pi = t.GetProperty(propName, bindingFlags);
+                t = t.BaseType;
+            }
 
             if (pi == null)
             {
                 var message = $"Property {propName} was not found in Type {obj.GetType().FullName}";
-                throw new ArgumentOutOfRangeException("propName", message);
+                throw new ArgumentOutOfRangeException(nameof(propName), message);
             }
 
             return (TProp)pi.GetValue(obj, null);
@@ -46,18 +55,39 @@ namespace OkonkwoCore.Netx.Utilities
         /// <returns>PropertyValue</returns>
         public static void SetPrivatePropertyValue<TProp>(this object obj, string propName, TProp val)
         {
-            Type t = obj.GetType();
+            //Type t = obj.GetType();
 
-            if (t.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) == null)
+            //if (t.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) == null)
+            //{
+            //    throw new ArgumentOutOfRangeException("propName",
+            //                          string.Format("Property {0} was not found in Type {1}", propName,
+            //                                        obj.GetType().FullName));
+            //}
+
+            //t.InvokeMember(propName,
+            //               BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.SetProperty |
+            //               BindingFlags.Instance, null, obj, new object[] { val });
+
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+
+            Type t = obj.GetType();
+            PropertyInfo pi = null;
+
+            var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+
+            while (pi == null && t != null)
             {
-                throw new ArgumentOutOfRangeException("propName",
-                                      string.Format("Property {0} was not found in Type {1}", propName,
-                                                    obj.GetType().FullName));
+                pi = t.GetProperty(propName, bindingFlags);
+                t = t.BaseType;
             }
 
-            t.InvokeMember(propName,
-                           BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.SetProperty |
-                           BindingFlags.Instance, null, obj, new object[] { val });
+            if (pi == null)
+            {
+                string message = string.Format("Property {0} was not found in Type {1}", propName, obj.GetType().FullName);
+                throw new ArgumentOutOfRangeException(nameof(propName), message);
+            }
+
+            pi.SetValue(obj, val);
         }
 
         /// <summary>
@@ -105,9 +135,11 @@ namespace OkonkwoCore.Netx.Utilities
             Type t = obj.GetType();
             FieldInfo fi = null;
 
+            var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+
             while (fi == null && t != null)
             {
-                fi = t.GetField(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                fi = t.GetField(propName, bindingFlags);
                 t = t.BaseType;
             }
 
@@ -136,9 +168,11 @@ namespace OkonkwoCore.Netx.Utilities
             Type t = obj.GetType();
             FieldInfo fi = null;
 
+            var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+
             while (fi == null && t != null)
             {
-                fi = t.GetField(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                fi = t.GetField(propName, bindingFlags);
                 t = t.BaseType;
             }
 
