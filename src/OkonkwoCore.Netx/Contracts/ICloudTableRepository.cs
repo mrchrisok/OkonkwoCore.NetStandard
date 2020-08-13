@@ -11,6 +11,7 @@ namespace OkonkwoCore.Netx.Contracts
         Task<IEnumerable<TEntity>> GetByPropertiesAsync(IDictionary<string, string> properties);
         Task<IEnumerable<TEntity>> GetByFilterAsync(string filter);
         Task<IEnumerable<TEntity>> GetAsync(TableQuery query);
+        Task<TEntity> InsertOrMergeAsync(TEntity entity);
         Task<IEnumerable<TEntity>> InsertOrReplaceRangeAsync(IEnumerable<TEntity> entities);
         Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> entities);
         //
@@ -19,6 +20,7 @@ namespace OkonkwoCore.Netx.Contracts
         Task<IEnumerable<TableResult>> GetTableResultsAsync();
         Task<TableResult> GetTableResultAsync(string id);
         Task<TableResult> GetTableResultAsync(string partitionKey, string rowKey);
+        Task<TableResult> InsertOrMergeAndReturnTableResultAsync(TEntity entity);
         Task<IEnumerable<TableResult>> InsertOrReplaceRangeAndReturnTableResultsAsync(IEnumerable<TEntity> entities);
         Task<TableResult> UpdateAndReturnTableResultAsync(TEntity entity);
         Task<IEnumerable<TableResult>> UpdateRangeAndReturnTableResultsAsync(IEnumerable<TEntity> entities);

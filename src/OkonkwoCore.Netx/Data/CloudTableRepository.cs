@@ -175,6 +175,14 @@ namespace OkonkwoCore.Netx.Data
             _ = await RemoveAndReturnTableResultAsync(id);
         }
 
+        public virtual async Task<TEntity> InsertOrMergeAsync(TEntity entity)
+        {
+            var tableEntityProxy = await _tableEntityProxyFactory.BuildAsync<TEntity>();
+            var tableResult = await InsertOrMergeAndReturnTableResultAsync(entity);
+
+            return tableEntityProxy.GetEntityFromTableResult(tableResult);
+        }
+
         public virtual async Task<IEnumerable<TEntity>> InsertOrReplaceRangeAsync(IEnumerable<TEntity> entities)
         {
             var tableResults = await InsertOrReplaceRangeAndReturnTableResultsAsync(entities);
@@ -283,6 +291,15 @@ namespace OkonkwoCore.Netx.Data
             //
             var operation = TableOperation.Delete(tableEntityProxy);
             var tableResult = await _cloudTable.ExecuteAsync(operation);
+            return tableResult;
+        }
+
+        public virtual async Task<TableResult> InsertOrMergeAndReturnTableResultAsync(TEntity entity)
+        {
+            var tableEntityProxy = await _tableEntityProxyFactory.BuildAsync(entity);
+            var operation = TableOperation.InsertOrMerge(tableEntityProxy);
+            var tableResult = await _cloudTable.ExecuteAsync(operation);
+
             return tableResult;
         }
 
