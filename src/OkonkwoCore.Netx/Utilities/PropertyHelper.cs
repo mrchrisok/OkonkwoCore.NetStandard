@@ -55,19 +55,6 @@ namespace OkonkwoCore.Netx.Utilities
         /// <returns>PropertyValue</returns>
         public static void SetPrivatePropertyValue<TProp>(this object obj, string propName, TProp val)
         {
-            //Type t = obj.GetType();
-
-            //if (t.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) == null)
-            //{
-            //    throw new ArgumentOutOfRangeException("propName",
-            //                          string.Format("Property {0} was not found in Type {1}", propName,
-            //                                        obj.GetType().FullName));
-            //}
-
-            //t.InvokeMember(propName,
-            //               BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.SetProperty |
-            //               BindingFlags.Instance, null, obj, new object[] { val });
-
             if (obj == null) throw new ArgumentNullException(nameof(obj));
 
             Type t = obj.GetType();
@@ -83,7 +70,7 @@ namespace OkonkwoCore.Netx.Utilities
 
             if (pi == null)
             {
-                string message = string.Format("Property {0} was not found in Type {1}", propName, obj.GetType().FullName);
+                string message = $"Property {propName} was not found in Type {obj.GetType().FullName}";
                 throw new ArgumentOutOfRangeException(nameof(propName), message);
             }
 
@@ -146,8 +133,7 @@ namespace OkonkwoCore.Netx.Utilities
             if (fi == null)
             {
                 throw new ArgumentOutOfRangeException(nameof(propName),
-                                      string.Format("Field {0} was not found in Type {1}", propName,
-                                                    obj.GetType().FullName));
+                                      $"Field {propName} was not found in Type {obj.GetType().FullName}");
             }
 
             return (TField)fi.GetValue(obj);
@@ -178,8 +164,8 @@ namespace OkonkwoCore.Netx.Utilities
 
             if (fi == null)
             {
-                string message = string.Format("Field {0} was not found in Type {1}", propName, obj.GetType().FullName);
-                throw new ArgumentOutOfRangeException("propName", message);
+                string message = $"Field {propName} was not found in Type {obj.GetType().FullName}";
+                throw new ArgumentOutOfRangeException(nameof(propName), message);
             }
 
             fi.SetValue(obj, val);
